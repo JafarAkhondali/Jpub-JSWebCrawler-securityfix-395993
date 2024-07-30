@@ -20,6 +20,11 @@ svr.listen(SERVER_PORT, function(){
 
 // 서버에 요청(request)이 있을 경우의 처리
 function checkRequest(req, res) {
+    if (path.normalize(decodeURI(uri.pathname)) !== decodeURI(uri.pathname)) {
+        res.statusCode = 403;
+        res.end();
+        return;
+    }
   var uri = URL.parse(req.url, true);
   var pathname = uri.pathname;
   if (pathname == "/") pathname = FILE_DEFAULT;
